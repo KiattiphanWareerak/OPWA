@@ -51,8 +51,9 @@ const url10 = `http://localhost:3002/getConvertTHBtoUSD?thb=1000`;
 
 const url11 = `http://localhost:3002/getConvertBarreltoLiter?barrel=150`;
 
-axios.get(url11)
+axios.get(url1)
     .then((response) => {
+        console.log("response = ",response)
         console.log('Status:', response.status);
         console.log('Data:', response.data);
     })
