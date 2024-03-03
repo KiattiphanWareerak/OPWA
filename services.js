@@ -3,6 +3,8 @@ const express = require('express');
 const axios = require('axios');
 const cors = require('cors');
 const { XMLParser } = require('fast-xml-parser');
+const { JSDOM } = require('jsdom');
+const { Client } = require('pg');
 
 // Endpoint the PTT service
 const serviceURL = 'https://orapiweb.pttor.com/oilservice/OilPrice.asmx';
@@ -203,6 +205,38 @@ app.get('/getConvertBarreltoLiter', async (req, res) => {
   } catch (error) {
     console.error('Error fetching getConvertTHBtoUSD:', error);
     res.status(500).send('Error fetching getConvertTHBtoUSD');
+  }
+});
+// DB routing
+app.get('/getPttOilPrice', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("Data inserted successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
   }
 });
 
@@ -583,3 +617,65 @@ async function getHistoricalOilPricesProvincial(language, dd, mm, yyyy, provinci
     return historicalPricesProvincial;
   }
 }
+
+// recursive api to insert to my db
+setInterval(async () => {
+  try {
+      const data = await getCurrentOilPrice('en'); // สำหรับภาษาอังกฤษ
+      const parsed = parser.parse(data);
+      console.log(parsed);
+
+      const xmlString = parsed['soap:Envelope']['soap:Body'].CurrentOilPriceResponse.CurrentOilPriceResult;
+      const dom = new JSDOM(xmlString);
+      const document = dom.window.document;
+      const fuelElements = document.getElementsByTagName('FUEL');
+
+      const fuelArray = [];
+      for (let i = 0; i < fuelElements.length; i++) {
+          const fuelElement = fuelElements[i];
+          const priceDate = fuelElement.querySelector('PRICE_DATE').textContent;
+          const product = fuelElement.querySelector('PRODUCT').textContent;
+          const price = fuelElement.querySelector('PRICE').textContent;
+        
+          const fuelInfo = {
+            "PRICE_DATE": priceDate,
+            "PRODUCT": product,
+            "PRICE": price
+          };
+        
+          fuelArray.push(fuelInfo);
+      }
+        
+      console.log(fuelArray);
+
+      const client = new Client({
+          user: 'ford_ser',
+          host: '10.161.112.160',
+          database: 'oil_price_cloud',
+          password: '1q2w3e4r',
+          port: 5432,
+      });
+
+      await client.connect();
+
+      const queries = fuelArray.map(async (fuelInfo) => {
+          const { PRICE_DATE, PRODUCT, PRICE } = fuelInfo;
+          const query = `
+              INSERT INTO ptt_oil_price (price_date, product, price)
+              VALUES ($1, $2, $3)
+          `;
+              
+          const values = [PRICE_DATE, PRODUCT, PRICE];
+              
+          return client.query(query, values);
+      });
+
+      await Promise.all(queries);
+
+      await client.end();
+      
+      console.log("Data inserted successfully");
+  } catch (error) {
+      console.error('Error fetching and processing data:', error);
+  }
+}, 360000); // 1 hour

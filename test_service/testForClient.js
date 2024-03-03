@@ -1,4 +1,6 @@
 const axios = require('axios');
+const { JSDOM } = require('jsdom');
+const { Client } = require('pg');
 
 const url1 = 'http://localhost:3002/getCurrentOilPrice?language=en';
 const url2 = 'http://localhost:3002/getCurrentOilPriceProvincial?language=en&provincial=' + encodeURIComponent('Mukdahan');
@@ -51,11 +53,74 @@ const url10 = `http://localhost:3002/getConvertTHBtoUSD?thb=1000`;
 
 const url11 = `http://localhost:3002/getConvertBarreltoLiter?barrel=150`;
 
-axios.get(url11)
+const url12 = `http://localhost:3002/getPttOilPrice`;
+
+axios.get(url12)
     .then((response) => {
+        console.log("response = ",response)
         console.log('Status:', response.status);
         console.log('Data:', response.data);
     })
     .catch((error) => {
         console.error('Error:', error.message);
     });
+
+// axios.get(url1)
+//     .then(async (response) => {
+//         console.log('Status:', response.status);
+//         console.log('Data:', response.data);
+
+//         const xmlString = response.data.parsedData['soap:Envelope']['soap:Body'].CurrentOilPriceResponse.CurrentOilPriceResult;
+//         const dom = new JSDOM(xmlString);
+//         const document = dom.window.document;
+//         const fuelElements = document.getElementsByTagName('FUEL');
+
+//         const fuelArray = [];
+//         for (let i = 0; i < fuelElements.length; i++) {
+//             const fuelElement = fuelElements[i];
+//             const priceDate = fuelElement.querySelector('PRICE_DATE').textContent;
+//             const product = fuelElement.querySelector('PRODUCT').textContent;
+//             const price = fuelElement.querySelector('PRICE').textContent;
+          
+//             const fuelInfo = {
+//               "PRICE_DATE": priceDate,
+//               "PRODUCT": product,
+//               "PRICE": price
+//             };
+          
+//             fuelArray.push(fuelInfo);
+//         }
+          
+//         console.log(fuelArray);
+
+//         const client = new Client({
+//             user: 'ford_ser',
+//             host: '10.161.112.160',
+//             database: 'oil_price_cloud',
+//             password: '1q2w3e4r',
+//             port: 5432,
+//         });
+
+//         await client.connect();
+
+//         const queries = fuelArray.map(async (fuelInfo) => {
+//             const { PRICE_DATE, PRODUCT, PRICE } = fuelInfo;
+//             const query = `
+//                 INSERT INTO ptt_oil_price (price_date, product, price)
+//                 VALUES ($1, $2, $3)
+//             `;
+                
+//             const values = [PRICE_DATE, PRODUCT, PRICE];
+                
+//             return client.query(query, values);
+//         });
+
+//         await Promise.all(queries);
+
+//         await client.end();
+        
+//         console.log("Data inserted successfully");
+//     })
+//     .catch((error) => {
+//         console.error('Error:', error.message);
+//     });
