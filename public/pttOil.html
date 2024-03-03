@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <title>PTT oil chart</title>
+    <!-- External stylesheets -->
+    <link rel="stylesheet" href="styles/mainStyles.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="scripts/commonScript.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="head-menu">
+            <a class="navMenu">
+                <img src="components/logo.png" alt="OPWA Logo" width="60px">
+            </a>
+            <a href="pttOil.html" class="active navMenu">PTT Oil Price</a>
+            <a href="sgpOil.html" class="navMenu">Singapore Oil Price</a>
+            <a href="usdPrice.html" class="navMenu">USD Price</a>
+        </div>
+        <div class="main-content">
+            <div class="select-data-menu">
+                <div class="select-time-container">
+                    <div class="select-time" id="1-day">1 Day</div>
+                    <div>|</div>
+                    <div class="select-time" id="1-week">1 Week</div>
+                    <div>|</div>
+                    <div class="select-time" id="1-month">1 Month</div>
+                    <div>|</div>
+                    <div class="select-time" id="3-months">3 Months</div>
+                    <div>|</div>
+                    <div class="select-time" id="6-months">6 Months</div>
+                    <div>|</div>
+                    <div class="select-time" id="1-year">1 Year</div>
+                    <div>|</div>
+                </div>
+                <div class="select-oil-container">
+                    <select id="select-oil">
+                        <option value="Diesel">Diesel</option>
+                        <option value="Diesel B7">Diesel B7</option>
+                        <option value="Gasohol E85">Gasohol E85</option>
+                        <option value="Gasohol E20">Gasohol E20</option>
+                        <option value="Gasohol 91">Gasohol 91</option>
+                        <option value="Gasohol 95">Gasohol 95</option>
+                        <option value="Gasoline 95">Gasoline 95</option>
+                        <option value="Premium Diesel B7">Premium Diesel B7</option>
+                        <option value="Super Power GSH95">Super Power GSH95</option>
+                      </select>
+                </div>
+            </div>
+            <div class="graph-display">
+                <div id="oilChart" class="oilChart"></div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="pttOil.js"></script>
+</html>
