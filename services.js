@@ -618,7 +618,7 @@ async function getHistoricalOilPricesProvincial(language, dd, mm, yyyy, provinci
   }
 }
 
-// recursive api to insert to my db
+// Recursive api to insert to my db
 setInterval(async () => {
   try {
       const data = await getCurrentOilPrice('en'); // สำหรับภาษาอังกฤษ
