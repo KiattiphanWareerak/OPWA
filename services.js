@@ -139,6 +139,16 @@ app.get('/getRateUSDtoTHB', async (req, res) => {
     res.status(500).send('Error fetching RateUSDtoTHB');
   }
 });
+app.get('/getSingaporeOil', async (req, res) => {
+  try {
+    const data = await getSingaporeOil();
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching SingaporeOil:', error);
+    res.status(500).send('Error fetching SingaporeOil');
+  }
+});
 
 // Start the server
 app.listen(port, host, () => {
@@ -337,6 +347,28 @@ async function getRateUSDtoTHB(dd, mm, yyyy) {
       })
       .catch(error => {
         console.error(error);
+      });
+  });
+}
+async function getSingaporeOil() {
+  const options = {
+      method: 'GET',
+      url: 'https://www.exchangerates.org.uk/commodities_update.php?1708953275419',
+      headers: {
+          "x-requested-with": "XMLHttpRequest",
+      }
+    };
+
+  return new Promise(async (resolve, reject) => {
+      axios(options)
+      .then(response => {
+          console.log('Singapore oil response...');
+          console.log(response.data);
+
+          resolve(response.data);
+      })
+      .catch(error => {
+          console.error(error);
       });
   });
 }
