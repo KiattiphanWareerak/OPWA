@@ -34,7 +34,7 @@ app.get('/getCurrentOilPriceProvincial', async (req, res) => {
   try {
     const data = await getCurrentOilPriceProvincial(
       req.query.language || 'en',
-      req.query.provincial || 'bangkok'
+      req.query.provincial || 'Bangkok'
     );
 
     const parsedData = parser.parse(data);
@@ -141,7 +141,14 @@ app.get('/getRateUSDtoTHB', async (req, res) => {
 });
 app.get('/getSingaporeOil', async (req, res) => {
   try {
-    const data = await getSingaporeOil();
+    const currentDate = new Date();
+    const currentDay = String(currentDate.getDate()).padStart(2, '0')
+    const currentMonth = String(currentDate.getMonth()).padStart(2, '0')
+    const currentYear = currentDate.getFullYear()
+
+    const data = await getSingaporeOil(req.query.dd || currentDate.getDate(),
+    req.query.mm || currentDate.getMonth() + 1, 
+    req.query.yyyy || currentDate.getFullYear());
 
     res.json(data);
   } catch (error) {
@@ -149,6 +156,17 @@ app.get('/getSingaporeOil', async (req, res) => {
     res.status(500).send('Error fetching SingaporeOil');
   }
 });
+app.get('/getConvertUSDtoTHB', async (req, res) => {
+  try {
+    const data = await getConvertUSDtoTHB();
+
+    res.json(data);
+  } catch (error) {
+    console.error('Error fetching RateUSDtoTHB:', error);
+    res.status(500).send('Error fetching RateUSDtoTHB');
+  }
+});
+
 
 // Start the server
 app.listen(port, host, () => {
@@ -369,6 +387,72 @@ async function getSingaporeOil() {
       })
       .catch(error => {
           console.error(error);
+      });
+  });
+}
+async function getConvertUSDtoTHB(dd, mm, yyyy) {
+  const currentDate = new Date();
+  const oneMonthAgo = new Date();
+  oneMonthAgo.setMonth(currentDate.getMonth() - 1);
+
+  let pdd, pmm, pyyyy;
+  let dago, mago, yago;
+
+  if ( dd === currentDate.getDay()
+    && mm === (currentDate.getMonth() +1)
+    && yyyy === currentDate.getFullYear()) {
+      if ( oneMonthAgo.getMonth() < 0 ) {
+        dago = String(dd).padStart(2, '0');
+        mago = '12';
+        yago = currentDate.getFullYear() - 1;
+      } else if ( oneMonthAgo.getMonth() = 0 ) {
+        dago = String(dd).padStart(2, '0');
+        mago = '01';
+        yago = currentDate.getFullYear();
+      } else {
+        dago = String(dd).padStart(2, '0');
+        mago =  String(currentDate.getMonth()).padStart(2, '0');
+        yago = currentDate.getFullYear();
+      }
+  } else {
+    pdd = String(dd).padStart(2, '0');
+    pmm = String(mm).padStart(2, '0');
+    pyyyy = yyyy;
+
+    if ( mm === '1' || mm === 1) {
+      dago = String(dd).padStart(2, '0');
+      mago = '12';
+      yago = parseInt(yyyy) - 1;
+    } else {
+      dago = String(dd).padStart(2, '0');
+      mago =  String(parseInt(mm) - 1).padStart(2, '0');
+      yago = yyyy;
+    }
+  }
+
+  const options = {
+    method: 'GET',
+    url: 'https://apigw1.bot.or.th/bot/public/Stat-ReferenceRate/v2/DAILY_REF_RATE/',
+    params: {
+      start_period: `${yago}-${mago}-${dago}`,
+      end_period: `${pyyyy}-${pmm}-${pdd}`
+    },
+    headers: {
+      'X-IBM-Client-Id': 'df7d057e-4e6d-4da5-bdd9-329df964bd7e',
+      'Accept': 'application/json'
+    }
+  };
+  
+  return new Promise(async (resolve, reject) => {
+    axios(options)
+      .then(response => {
+        console.log('RateUSDtoTHB response...');
+        console.log(response.data);
+
+        resolve(response.data);
+      })
+      .catch(error => {
+        console.error(error);
       });
   });
 }

@@ -45,68 +45,68 @@ const url7 = `http://localhost:3002/getRateUSDtoTHB?${params7.toString()}`;
 
 const url8 = `http://localhost:3002/getSingaporeOil`;
 
-// axios.get(url1)
-//     .then((response) => {
-//         console.log('Status:', response.status);
-//         console.log('Data:', response.data);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error.message);
-//     });
+axios.get(url1)
+    .then((response) => {
+        console.log('Status:', response.status);
+        console.log('Data:', response.data);
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });
 
-// axios.get(url2)
-//     .then((response) => {
-//         console.log('Status:', response.status);
-//         console.log('Data:', response.data);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error.message);
-//     });
+axios.get(url2)
+    .then((response) => {
+        console.log('Status:', response.status);
+        console.log('Data:', response.data);
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });
 
-// axios.get(url3)
-//     .then((response) => {
-//         console.log('Status:', response.status);
-//         console.log('Data:', response.data);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error.message);
-//     });
+axios.get(url3)
+    .then((response) => {
+        console.log('Status:', response.status);
+        console.log('Data:', response.data);
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });
 
-// axios.get(url4)
-//     .then((response) => {
-//         console.log('Status:', response.status);
-//         console.log('Data:', response.data);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error.message);
-//     });
+axios.get(url4)
+    .then((response) => {
+        console.log('Status:', response.status);
+        console.log('Data:', response.data);
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });
 
-// axios.get(url5)
-//     .then((response) => {
-//         console.log('Status:', response.status);
-//         console.log('Data:', response.data);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error.message);
-//     });
+axios.get(url5)
+    .then((response) => {
+        console.log('Status:', response.status);
+        console.log('Data:', response.data);
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });
 
-// axios.get(url6)
-//     .then((response) => {
-//         console.log('Status:', response.status);
-//         console.log('Data:', response.data);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error.message);
-//     });
+axios.get(url6)
+    .then((response) => {
+        console.log('Status:', response.status);
+        console.log('Data:', response.data);
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });
 
-// axios.get(url7)
-//     .then((response) => {
-//         console.log('Status: ', response.status);
-//         console.log('Data: ', response.data.result.data.data_detail);
-//     })
-//     .catch((error) => {
-//         console.error('Error:', error.message);
-//     });
+axios.get(url7)
+    .then((response) => {
+        console.log('Status: ', response.status);
+        console.log('Data: ', response.data.result.data.data_detail);
+    })
+    .catch((error) => {
+        console.error('Error:', error.message);
+    });
 
 axios.get(url8)
     .then((response) => {
