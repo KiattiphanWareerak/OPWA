@@ -228,7 +228,348 @@ app.get('/getPttOilPrice', async (req, res) => {
 
     await client.end();
     
-    console.log("Data inserted successfully");
+    console.log("get ptt successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getSgdOilPrice', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM sgp_oil_price
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get sdg successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching sgd oil price:', error);
+    res.status(500).send('Error fetching sgd oil price');
+  }
+});
+app.get('/getRateUSDtoTHBforDb', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM rate_usd_thb
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get rate usd/thb db successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching rate usd/thb db:', error);
+    res.status(500).send('Error fetching rate usd/thb db');
+  }
+});
+app.get('/getPttDiesel', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Diesel'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get diesel successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttDieselB7', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Diesel B7'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get diesel b7 successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttGasoholE85', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol E85'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get Gasohol E85 successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttGasoholE20', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol E20'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get Gasohol E20 successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttGasohol91', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol 91'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get Gasohol 91 successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttGasohol95', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol 95'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get Gasohol 95 successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttGasoline95', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Gasoline 95'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get Gasoline 95 successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttPremiumDieselB7', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Premium Diesel B7'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get Premium Diesel B7 successfully");
+
+    const resultData = result.rows;
+
+    res.setHeader('Content-Type', 'application/json');
+    res.status(200).json({ resultData });
+  } catch (error) {
+    console.error('Error fetching ptt oil price:', error);
+    res.status(500).send('Error fetching ptt oil price');
+  }
+});
+app.get('/getPttSuperPowerGSH95', async (req, res) => {
+  try {
+    const client = new Client({
+        user: 'ford_ser',
+        host: '10.161.112.160',
+        database: 'oil_price_cloud',
+        password: '1q2w3e4r',
+        port: 5432,
+    });
+
+    await client.connect();
+
+    const query = `
+        SELECT * FROM ptt_oil_price WHERE product = 'Super Power GSH95'
+    `;
+        
+    const result = await client.query(query);
+
+    await client.end();
+    
+    console.log("get Super Power GSH95 successfully");
 
     const resultData = result.rows;
 
@@ -619,6 +960,7 @@ async function getHistoricalOilPricesProvincial(language, dd, mm, yyyy, provinci
 }
 
 // Recursive api to insert to my db
+// ppt oil
 setInterval(async () => {
   try {
       const data = await getCurrentOilPrice('en'); // สำหรับภาษาอังกฤษ
@@ -674,8 +1016,52 @@ setInterval(async () => {
 
       await client.end();
       
-      console.log("Data inserted successfully");
+      console.log("Data inserted ptt successfully");
   } catch (error) {
       console.error('Error fetching and processing data:', error);
   }
 }, 360000); // 1 hour
+// sgd oil
+setInterval(async () => {
+  try {
+      const data = await getSingaporeOil();
+
+      const oilSgdData = data['OILSGD'];
+      console.log(oilSgdData);
+
+      const client = new Client({
+          user: 'ford_ser',
+          host: '10.161.112.160',
+          database: 'oil_price_cloud',
+          password: '1q2w3e4r',
+          port: 5432,
+      });
+
+      await client.connect();
+
+      const query = `
+        INSERT INTO sgp_oil_price (value, change, change1, change2, lastdaily, hi, lo, time, chart)
+        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      `;
+
+      const values = [
+        oilSgdData.value,
+        oilSgdData.change,
+        oilSgdData.change1,
+        oilSgdData.change2,
+        oilSgdData.lastdaily,
+        oilSgdData.hi,
+        oilSgdData.lo,
+        oilSgdData.time,
+        oilSgdData.chart
+      ];
+
+      await client.query(query, values);
+      await client.end();
+      
+      console.log("Data inserted sdg successfully");
+  } catch (error) {
+      console.error('Error fetching and processing data:', error);
+  }
+}, 300000);
+// dollar usd/thb

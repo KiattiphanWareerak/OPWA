@@ -39,7 +39,7 @@ const params6 = new URLSearchParams({
 const url6 = `http://localhost:3002/getOilPriceProvincialList?${params6.toString()}`;
 // url6 จะมีรูปแบบ http://localhost:3002/getOilPriceProvincialList?language=en&dd=2&mm=2&yyyy=2024&provincial=Bangkok
 const params7 = new URLSearchParams({
-    dd: 15,
+    dd: 3,
     mm: 1,
     yyyy: 2024,
 });
@@ -56,15 +56,59 @@ const url11 = `http://localhost:3002/getConvertBarreltoLiter?barrel=150`;
 
 const url12 = `http://localhost:3002/getPttOilPrice`;
 
+const url13 = `http://localhost:3002/getSgdOilPrice`;
 
-axios.get(url1)
-    .then((response) => {
+const url14 = `http://localhost:3002/getPttDiesel`;
+
+const url15 = `http://localhost:3002/getRateUSDtoTHBforDb`;
+
+axios.get(url15)
+    .then(async (response) => {
         console.log('Status:', response.status);
         console.log('Data:', response.data);
     })
     .catch((error) => {
         console.error('Error:', error.message);
     });
+
+// axios.get(url7)
+//     .then(async (response) => {
+//         console.log('Status:', response.status);
+//         console.log('Data:', response.data);
+
+//         let dataUsdThb = response.data.result.data.data_detail;
+
+//         console.log(dataUsdThb);
+
+//         const client = new Client({
+//             user: 'ford_ser',
+//             host: '10.161.112.160',
+//             database: 'oil_price_cloud',
+//             password: '1q2w3e4r',
+//             port: 5432,
+//         });
+  
+//         (async () => {
+//             try {
+//                 await client.connect();
+        
+//                 for (const item of dataUsdThb) {
+//                     const query = 'INSERT INTO rate_usd_thb (period, rate) VALUES ($1, $2)';
+//                     const values = [item.period, item.rate];
+//                     await client.query(query, values);
+//                 }
+        
+//                 console.log('Data inserted successfully');
+//             } catch (error) {
+//                 console.error('Error inserting data:', error);
+//             } finally {
+//                 await client.end();
+//             }
+//         })();
+//     })
+//     .catch((error) => {
+//         console.error('Error:', error.message);
+//     });
 
 // axios.get(url5)
 //     .then((response) => {

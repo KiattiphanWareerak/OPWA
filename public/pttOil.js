@@ -1,5 +1,5 @@
 const getData = async () => {
-    const res = await fetch('dataTest.json');
+    const res = await fetch('http://localhost:3002/getPttDiesel');
     const jsonData = await res.json();
     const cdata = jsonData.map((data) => {
         const { DATE, PRICE } = data;
