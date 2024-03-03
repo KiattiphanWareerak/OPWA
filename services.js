@@ -48,11 +48,13 @@ app.get('/getCurrentOilPriceProvincial', async (req, res) => {
 });
 app.get('/getOilPrice', async (req, res) => {
   try {
+    const currentDate = new Date();
+
     const data = await getOilPrice(
       req.query.language || 'en',
-      req.query.dd,
-      req.query.mm,
-      req.query.yyyy,
+      req.query.dd || currentDate.getDate(),
+      req.query.mm || currentDate.getMonth() + 1,
+      req.query.yyyy || currentDate.getFullYear() - 1,
     );
 
     const parsedData = parser.parse(data);
@@ -65,11 +67,13 @@ app.get('/getOilPrice', async (req, res) => {
 });
 app.get('/getOilPriceProvincial', async (req, res) => {
   try {
-    const data = await getHistoricalOilPricesProvincial(
+    const currentDate = new Date();
+
+    const data = await getOilPriceProvincial(
       req.query.language || 'en',
-      req.query.dd,
-      req.query.mm,
-      req.query.yyyy,
+      req.query.dd || currentDate.getDate(),
+      req.query.mm || currentDate.getMonth() + 1,
+      req.query.yyyy || currentDate.getFullYear() - 1,
       req.query.provincial || 'bangkok'
     );
 
