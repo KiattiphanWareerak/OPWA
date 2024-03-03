@@ -48,6 +48,7 @@ app.get('/getCurrentOilPriceProvincial', async (req, res) => {
 });
 app.get('/getOilPrice', async (req, res) => {
   try {
+    // ข้อมูลเฉพาะวันที่กำหนด dd/mm/yyyy
     const currentDate = new Date();
 
     const data = await getOilPrice(
@@ -67,6 +68,7 @@ app.get('/getOilPrice', async (req, res) => {
 });
 app.get('/getOilPriceProvincial', async (req, res) => {
   try {
+    // ข้อมูลเฉพาะวันที่กำหนด dd/mm/yyyy
     const currentDate = new Date();
 
     const data = await getOilPriceProvincial(
@@ -87,6 +89,7 @@ app.get('/getOilPriceProvincial', async (req, res) => {
 });
 app.get('/getOilPriceList', async (req, res) => {
   try {
+    // ย้อนหลังจากวันที่กำหนด dd/mm/yyyy ถึงปัจจุบัน
     const currentDate = new Date();
 
     const data = await getHistoricalOilPrices(
@@ -106,6 +109,7 @@ app.get('/getOilPriceList', async (req, res) => {
 });
 app.get('/getOilPriceProvincialList', async (req, res) => {
   try {
+    // ย้อนหลังจากวันที่กำหนด dd/mm/yyyy ถึงปัจจุบัน
     const currentDate = new Date();
 
     const data = await getHistoricalOilPricesProvincial(
@@ -141,14 +145,7 @@ app.get('/getRateUSDtoTHB', async (req, res) => {
 });
 app.get('/getSingaporeOil', async (req, res) => {
   try {
-    const currentDate = new Date();
-    const currentDay = String(currentDate.getDate()).padStart(2, '0')
-    const currentMonth = String(currentDate.getMonth()).padStart(2, '0')
-    const currentYear = currentDate.getFullYear()
-
-    const data = await getSingaporeOil(req.query.dd || currentDate.getDate(),
-    req.query.mm || currentDate.getMonth() + 1, 
-    req.query.yyyy || currentDate.getFullYear());
+    const data = await getSingaporeOil();
 
     res.json(data);
   } catch (error) {
@@ -158,15 +155,56 @@ app.get('/getSingaporeOil', async (req, res) => {
 });
 app.get('/getConvertUSDtoTHB', async (req, res) => {
   try {
-    const data = await getConvertUSDtoTHB();
+    const currentDate = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(currentDate.getDate() - 1);
 
-    res.json(data);
+    const data = await getConvertUSDtoTHB(String(yesterday.getDate()).padStart(2, "0"),
+    String(yesterday.getMonth()).padStart(2, "0"), 
+    yesterday.getFullYear());
+
+    let result = parseFloat(data.result.data.data_detail[0].rate) * parseFloat(req.query.usd);
+    result = result.toFixed(3);
+    console.log(data.result.data.data_detail[0].rate + " * " + req.query.usd + " = " + result);
+
+    res.json(result);
   } catch (error) {
-    console.error('Error fetching RateUSDtoTHB:', error);
-    res.status(500).send('Error fetching RateUSDtoTHB');
+    console.error('Error fetching ConvertUSDtoTHB:', error);
+    res.status(500).send('Error fetching ConvertUSDtoTHB');
   }
 });
+app.get('/getConvertTHBtoUSD', async (req, res) => {
+  try {
+    const currentDate = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(currentDate.getDate() - 1);
 
+    const data = await getConvertUSDtoTHB(String(yesterday.getDate()).padStart(2, "0"),
+    String(yesterday.getMonth()).padStart(2, "0"), 
+    yesterday.getFullYear());
+
+    let result = parseFloat(req.query.thb) / parseFloat(data.result.data.data_detail[0].rate);
+    result = result.toFixed(3);
+    console.log(req.query.thb + " / " + data.result.data.data_detail[0].rate + " = " + result);
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching getConvertTHBtoUSD:', error);
+    res.status(500).send('Error fetching getConvertTHBtoUSD');
+  }
+});
+app.get('/getConvertBarreltoLiter', async (req, res) => {
+  try {
+    let result = parseFloat(req.query.barrel) * 158.987;
+    result = result.toFixed(3);
+    console.log(req.query.barrel + " * 158.987 = " + result);
+
+    res.json(result);
+  } catch (error) {
+    console.error('Error fetching getConvertTHBtoUSD:', error);
+    res.status(500).send('Error fetching getConvertTHBtoUSD');
+  }
+});
 
 // Start the server
 app.listen(port, host, () => {
@@ -392,43 +430,17 @@ async function getSingaporeOil() {
 }
 async function getConvertUSDtoTHB(dd, mm, yyyy) {
   const currentDate = new Date();
-  const oneMonthAgo = new Date();
-  oneMonthAgo.setMonth(currentDate.getMonth() - 1);
 
   let pdd, pmm, pyyyy;
   let dago, mago, yago;
 
-  if ( dd === currentDate.getDay()
-    && mm === (currentDate.getMonth() +1)
-    && yyyy === currentDate.getFullYear()) {
-      if ( oneMonthAgo.getMonth() < 0 ) {
-        dago = String(dd).padStart(2, '0');
-        mago = '12';
-        yago = currentDate.getFullYear() - 1;
-      } else if ( oneMonthAgo.getMonth() = 0 ) {
-        dago = String(dd).padStart(2, '0');
-        mago = '01';
-        yago = currentDate.getFullYear();
-      } else {
-        dago = String(dd).padStart(2, '0');
-        mago =  String(currentDate.getMonth()).padStart(2, '0');
-        yago = currentDate.getFullYear();
-      }
-  } else {
-    pdd = String(dd).padStart(2, '0');
-    pmm = String(mm).padStart(2, '0');
-    pyyyy = yyyy;
+  dago = dd;
+  mago = mm;
+  yago = yyyy;
 
-    if ( mm === '1' || mm === 1) {
-      dago = String(dd).padStart(2, '0');
-      mago = '12';
-      yago = parseInt(yyyy) - 1;
-    } else {
-      dago = String(dd).padStart(2, '0');
-      mago =  String(parseInt(mm) - 1).padStart(2, '0');
-      yago = yyyy;
-    }
-  }
+  pdd = String(currentDate.getDate()).padStart(2, "0");
+  pmm = String(currentDate.getMonth()).padStart(2, "0");
+  pyyyy = currentDate.getFullYear();
 
   const options = {
     method: 'GET',
