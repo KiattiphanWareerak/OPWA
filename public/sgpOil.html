@@ -20,7 +20,7 @@
         <div class="main-content">
             <div class="select-data-menu">
                 <div class="select-time-container">
-                    <div class="select-time" id="1-day">1 Day</div>
+                    <div class="active select-time" id="1-day">1 Day</div>
                     <div>|</div>
                     <div class="select-time" id="1-week">1 Week</div>
                     <div>|</div>
@@ -49,19 +49,19 @@
             </div>
             <div class="graph-display">
                 <div id="oilChart" class="oilChart"></div>
-                <div class="exchange-tab">
-                    <div class="exchange-tab" id="barrel-to-liter">
+                <div class="exchange-container">
+                    <div class="active exchange-tab" id="barrel-to-liter">
                         <div class="top">
                             <label for="barrel">barrel</label>
                             <input type="text" placeholder="barrel (oil)" id="barrel">
                         </div>
                         <div class="bottom">
                             <label for="liter">liter</label>
-                            <input type="text" placeholder="liter(s)" id="liter">
+                            <input type="text" placeholder="liter(s)" id="liter" disabled>
                         </div>
                     </div>
                     <div class="switch-btn">
-                        <button id="switch-top&bottom"></button>
+                        <button id="switch-topANDbottom"></button>
                     </div>
                     <div class="exchange-tab" id="liter-to-barrel">
                         <div class="top">
@@ -70,10 +70,10 @@
                         </div>
                         <div class="bottom">
                             <label for="barrel">barrel</label>
-                            <input type="text" placeholder="barrel (oil)" id="barrel">
+                            <input type="text" placeholder="barrel (oil)" id="barrel" disabled>
                         </div>
                     </div>
-                    <div>
+                    <div class="convert-btn">
                         <button id="convert-value">Convert</button>
                     </div>
                 </div>
@@ -81,4 +81,6 @@
         </div>
     </div>
 </body>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+<script src="scripts/pttOil.js"></script>
 </html>

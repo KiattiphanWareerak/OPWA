@@ -12,9 +12,7 @@
 <body>
     <div class="container">
         <div class="head-menu">
-            <a class="navMenu">
-                <img src="components/logo.png" alt="OPWA Logo" width="60px">
-            </a>
+            <img src="components/logo.png" alt="OPWA Logo" width="60px">
             <a href="pttOil.html" class="active navMenu">PTT Oil Price</a>
             <a href="sgpOil.html" class="navMenu">Singapore Oil Price</a>
             <a href="usdPrice.html" class="navMenu">USD Price</a>
@@ -22,7 +20,7 @@
         <div class="main-content">
             <div class="select-data-menu">
                 <div class="select-time-container">
-                    <div class="select-time" id="1-day">1 Day</div>
+                    <div class="active select-time" id="1-day">1 Day</div>
                     <div>|</div>
                     <div class="select-time" id="1-week">1 Week</div>
                     <div>|</div>
@@ -50,11 +48,11 @@
                 </div>
             </div>
             <div class="graph-display">
-                <div id="oilChart" class="oilChart"></div>
+                <div class="oilChart" id="oilChart"></div>
             </div>
         </div>
     </div>
 </body>
 <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
-<script src="pttOil.js"></script>
+<script src="scripts/pttOil.js"></script>
 </html>

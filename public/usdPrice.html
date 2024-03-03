@@ -20,7 +20,7 @@
         <div class="main-content">
             <div class="select-data-menu">
                 <div class="select-time-container">
-                    <div class="select-time" id="1-day">1 Day</div>
+                    <div class="active select-time" id="1-day">1 Day</div>
                     <div>|</div>
                     <div class="select-time" id="1-week">1 Week</div>
                     <div>|</div>
@@ -48,33 +48,46 @@
                 </div>
             </div>
             <div class="graph-display">
-                <div id="oilChart" class="oilChart"></div>
-                <div class="exchange-tab" id="usd-to-baht">
-                    <div class="top">
-                        <label for="usd">USD</label>
-                        <input type="text" placeholder="dollar" id="usd">
+                <div class="oilChart" id="oilChart"></div>
+                <div class="exchange-container">
+                    <!--  //////////////////////////////////////////////////////////////  -->
+                    <div class="active exchange-tab" id="usd-to-baht">
+                        <div class="top">
+                            <label for="usd">USD</label>
+                            <input type="text" placeholder="dollar" id="usd">
+                        </div>
+                        <div class="switch-btn">
+                            <button onclick="switchTopAndBottom('usd-to-baht', 'baht-to-usd')">
+                                <i class="fa-solid fa-right-left"></i>
+                            </button>
+                        </div>
+                        <div class="bottom">
+                            <label for="baht">baht</label>
+                            <input type="text" placeholder="baht" id="baht" disabled>
+                        </div>
                     </div>
-                    <div class="bottom">
-                        <label for="baht">baht</label>
-                        <input type="text" placeholder="baht" id="baht">
+                    <!--  //////////////////////////////////////////////////////////////  -->
+                    <div class="exchange-tab" id="baht-to-usd">
+                        <div class="top">
+                            <label for="baht">baht</label>
+                            <input type="text" placeholder="baht" id="baht">
+                        </div>
+                        <div class="switch-btn">
+                            <button onclick="switchTopAndBottom('baht-to-usd', 'usd-to-baht')">
+                                <i class="fa-solid fa-right-left"></i>
+                            </button>
+                        </div>
+                        <div class="bottom">
+                            <label for="usd">USD</label>
+                            <input type="text" placeholder="dollar" id="usd" disabled>
+                        </div>
                     </div>
-                </div>
-                <div class="switch-btn">
-                    <button id="switch-top&bottom"></button>
-                </div>
-                <div class="exchange-tab" id="baht-to-usd">
-                    <div class="top">
-                        <label for="baht">baht</label>
-                        <input type="text" placeholder="baht" id="baht">
+                    <!--  //////////////////////////////////////////////////////////////  -->
+                    <div class="convert-btn">
+                        <button id="convert-value">Convert</button>
                     </div>
-                    <div class="bottom">
-                        <label for="usd">USD</label>
-                        <input type="text" placeholder="dollar" id="usd">
-                    </div>
-                </div>
-                <div>
-                    <button id="convert-value">Convert</button>
-                </div>
+                    <!--  //////////////////////////////////////////////////////////////  -->
+                </div> 
             </div>
         </div>
     </div>
