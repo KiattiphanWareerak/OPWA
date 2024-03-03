@@ -7,13 +7,12 @@
     <!-- External stylesheets -->
     <link rel="stylesheet" href="styles/mainStyles.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <script src="scripts/commonScript.js"></script>
 </head>
 <body>
     <div class="container">
         <div class="head-menu">
-            <a href="index.html" class="navMenu">
-                <img src="components/logo.png" alt="OPWA Logo" width="60px">
-            </a>
+            <img src="components/logo.png" alt="OPWA Logo" width="60px">
             <a href="pttOil.html" class="navMenu">PTT Oil Price</a>
             <a href="sgpOil.html" class=" active navMenu">Singapore Oil Price</a>
             <a href="usdPrice.html" class="navMenu">USD Price</a>
@@ -21,12 +20,18 @@
         <div class="main-content">
             <div class="select-data-menu">
                 <div class="select-time-container">
-                    <button class="select-time" id="1-day">1 Day</button>
-                    <button class="select-time" id="1-week">1 Week</button>
-                    <button class="select-time" id="1-month">1 Month</button>
-                    <button class="select-time" id="3-months">3 Months</button>
-                    <button class="select-time" id="6-months">6 Months</button>
-                    <button class="select-time" id="1-year">1 Year</button>
+                    <div class="select-time" id="1-day">1 Day</div>
+                    <div>|</div>
+                    <div class="select-time" id="1-week">1 Week</div>
+                    <div>|</div>
+                    <div class="select-time" id="1-month">1 Month</div>
+                    <div>|</div>
+                    <div class="select-time" id="3-months">3 Months</div>
+                    <div>|</div>
+                    <div class="select-time" id="6-months">6 Months</div>
+                    <div>|</div>
+                    <div class="select-time" id="1-year">1 Year</div>
+                    <div>|</div>
                 </div>
                 <div class="select-oil-container">
                     <select id="select-oil">
@@ -44,7 +49,34 @@
             </div>
             <div class="graph-display">
                 <div id="oilChart" class="oilChart"></div>
-                <div class="exchange-tab"></div>
+                <div class="exchange-tab">
+                    <div class="exchange-tab" id="barrel-to-liter">
+                        <div class="top">
+                            <label for="barrel">barrel</label>
+                            <input type="text" placeholder="barrel (oil)" id="barrel">
+                        </div>
+                        <div class="bottom">
+                            <label for="liter">liter</label>
+                            <input type="text" placeholder="liter(s)" id="liter">
+                        </div>
+                    </div>
+                    <div class="switch-btn">
+                        <button id="switch-top&bottom"></button>
+                    </div>
+                    <div class="exchange-tab" id="liter-to-barrel">
+                        <div class="top">
+                            <label for="liter">liter</label>
+                            <input type="text" placeholder="liter(s)" id="liter">
+                        </div>
+                        <div class="bottom">
+                            <label for="barrel">barrel</label>
+                            <input type="text" placeholder="barrel (oil)" id="barrel">
+                        </div>
+                    </div>
+                    <div>
+                        <button id="convert-value">Convert</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

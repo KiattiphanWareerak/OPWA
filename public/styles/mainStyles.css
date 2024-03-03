@@ -1,0 +1,79 @@
+body {
+    display: flex;
+}
+
+.container {
+    width: 100%;
+    height: 100%;
+}
+
+/* * * * * * * * * * * Menu Part * * * * * * * * * * * * */
+.head-menu {
+    display: flex;
+    width: 100%;
+    height: 20%;
+    background: rgb(45, 41, 41);
+    align-items: center;
+}
+
+.head-menu img {
+    order: -1; /* Set the image to display before the anchors */
+    margin-right: 10px; /* Add some space between the image and the anchors */
+}
+
+.head-menu a {
+    /* float: left; */
+    color: #ffffff;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 17px;
+    transition: all .3s ease-out;
+    
+}
+
+.head-menu a.active{
+    background-color: #9e4b4b;
+    border-radius: 5px;
+}
+/* * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
+/* * * * * * * * * Select Data Part * * * * * * * * * * * */
+.select-data-menu{
+    display: flex;
+    width: 100%;
+    min-height: 20%;
+    justify-content: space-between;
+    margin-top: 2px;
+    border: #3b3a3a 1px solid;
+    border-radius: 2px;
+}
+
+.select-data-menu .select-time-container{
+    display: flex;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-left: 5px;
+}
+
+.select-data-menu .select-time-container .select-time{
+    text-align: center;
+    width: 65px;
+    color: #000000;
+    background-color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+    cursor: pointer;
+}
+
+.select-data-menu .select-time-container .select-time.active{
+    background-color: rgb(45, 41, 41);
+    color: white;
+    transition: all .3s ease-in-out;
+}
+
+.select-data-menu .select-oil-container{
+    margin-top: 2px;
+    margin-bottom: 2px;
+    margin-right: 10px;
+}
