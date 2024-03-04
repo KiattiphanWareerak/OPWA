@@ -1,43 +1,40 @@
-const getData = async () => {
-  const res = await fetch("http://localhost:3002/getSgdOilPrice"); // เปลี่ยน URL ที่นี่
-  const jsonData = await res.json();
-  const cdata = jsonData.resultData.map((data) => {
-    const { oilsgd_time, oilsgd_value } = data; // ปรับการเข้าถึงข้อมูลใหม่ที่ต้องการ
-    const timeParts = oilsgd_time.split(":");
-    const datetime = new Date().setHours(
-      parseInt(timeParts[0]),
-      parseInt(timeParts[1]),
-      parseInt(timeParts[2]),
-      0
-    ); // สร้างวันที่ใหม่จากเวลาที่ให้มา
-    console.log("datetime = ", datetime);
-    return {
-      time: datetime,
-      value: parseFloat(oilsgd_value),
-    };
+fetch('http://localhost:3002/getSgdOilPrice')
+  .then(response => response.json())
+  .then(data => {
+    const oilPrices = data.resultData.map(entry => ({
+      time: entry.oilsgd_time,
+      value: parseFloat(entry.oilsgd_value)
+    }));
+    
+    const times = oilPrices.map(price => price.time);
+    const values = oilPrices.map(price => price.value);
+
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: times,
+        datasets: [{
+          label: 'SGD Oil Price',
+          data: values,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            position: 'right',
+            ticks: {
+              beginAtZero: false
+            }
+          }]
+        }
+      }
+    });
   });
-  console.log("cdata = ", cdata);
-  return cdata;
-};
 
-const displayChart = async () => {
-  const chartProperties = {
-    width: 1400,
-    height: 600,
-    timeScale: {
-      timeVisible: true,
-      secondsVisible: true,
-    },
-  };
-
-  const domElement = document.getElementById("oilChart");
-  const chart = LightweightCharts.createChart(domElement, chartProperties);
-  const lineSeries = chart.addLineSeries();
-  const linedata = await getData();
-  console.log("linedata = ", linedata);
-
-  lineSeries.setData(linedata);
-};
 
 const convertBtn = document.getElementById("convert-value");
 convertBtn.addEventListener("click", convertAndDisplayResult);
