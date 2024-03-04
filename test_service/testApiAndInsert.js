@@ -55,18 +55,54 @@ const url14 = `http://localhost:3002/getRateUSDtoTHBforDb`;
 
 // main //
 
-// testGetApiService();
-insertRateUsdThb(); // ย้อนหลัง 1 เดือน จากวันที่กำหนด dd/mm/yyyy
+testGetApiService();
+// insertRateUsdThb(); // ย้อนหลัง 1 เดือน จากวันที่กำหนด dd/mm/yyyy
 // insertPtt(); // ย้อนหลังจากวันที่กำหนด dd/mm/yyyy เลย (Error insert บ่อย)
 
 // ---- //
 
 // test api
 async function testGetApiService() {
-    axios.get(`http://localhost:3002/getRateUSDtoTHBforDb`)
+    axios.get(`http://localhost:3002/getPttDiesel`)
     .then(async (response) => {
         console.log('Status:', response.status);
         console.log('Data:', response.data);
+
+        // สร้างอ็อบเจ็กต์เพื่อเก็บข้อมูลราคาตามเดือน
+        let monthlyPrices = {};
+
+        // วนลูปผ่านข้อมูลราคาทุกรายการ
+        response.data.resultData.forEach(item => {
+            // แปลงวันที่ในรูปแบบ string เป็น Date object
+            let priceDate = new Date(item.price_date);
+            // ดึงเดือนและปีออกมา
+            let monthYear = priceDate.getMonth() + 1 + '/' + priceDate.getFullYear();
+            
+            // ถ้ายังไม่มีข้อมูลราคาสำหรับเดือนนี้ ให้สร้างอาเรย์ว่าง
+            if (!monthlyPrices[monthYear]) {
+                monthlyPrices[monthYear] = [];
+            }
+            
+            // เก็บราคาลงในอาเรย์ของเดือนนี้
+            monthlyPrices[monthYear].push(parseFloat(item.price));
+        });
+
+        // สร้างอ็อบเจ็กต์เพื่อเก็บค่าเฉลี่ยของราคาทุกเดือน
+        let averagePrices = {};
+
+        // วนลูปผ่านข้อมูลราคาทุกเดือน
+        for (let monthYear in monthlyPrices) {
+            // คำนวณค่าเฉลี่ยของราคาสำหรับเดือนนี้
+            let total = monthlyPrices[monthYear].reduce((acc, curr) => acc + curr, 0);
+            let average = total / monthlyPrices[monthYear].length;
+            
+            // เก็บค่าเฉลี่ยไว้ในอ็อบเจ็กต์ averagePrices
+            averagePrices[monthYear] = average.toFixed(3); // ปัดเลขทศนิยมเป็น 3 ตำแหน่ง
+        }
+
+        // แสดงผลลัพธ์
+        console.log(averagePrices);
+
     })
     .catch((error) => {
         console.error('Error:', error.message);

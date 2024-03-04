@@ -1,65 +1,39 @@
-const getData = async () => {
-  try {
-      const res = await fetch("http://localhost:3002/getRateUSDtoTHBforDb");
-      const jsonData = await res.json();
-      
-      if (!jsonData.resultData || jsonData.resultData.length === 0) {
-          throw new Error("No result data found");
+// Fetch data from the API
+fetch('http://localhost:3002/getRateUSDtoTHBforDb')
+  .then(response => response.json())
+  .then(data => {
+    const sortedData = data.resultData.sort((a, b) => {
+      return new Date(a.period) - new Date(b.period);
+    });
+    const dates = sortedData.map(entry => entry.period);
+    const rates = sortedData.map(entry => parseFloat(entry.rate));
+    console.log("dates = ",dates)
+
+
+    // Create a new chart
+    const ctx = document.getElementById('myChart').getContext('2d');
+    const myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: dates,
+        datasets: [{
+          label: 'Exchange Rate (USD to THB)',
+          data: rates,
+          backgroundColor: 'rgba(255, 99, 132, 0.2)',
+          borderColor: 'rgba(255, 99, 132, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        scales: {
+          yAxes: [{
+            position: 'right', // ตำแหน่งของแกน y ที่มีอยู่ข้างขวา
+            ticks: {
+              beginAtZero: false
+            }
+          }]
+        }
       }
-
-      const cdata = jsonData.resultData.map((data) => {
-          const { period, rate } = data;
       
-          // Split the period string into year, month, and day parts
-          const [year, month, day] = period.split('-');
-      
-          // Add leading zeros to month and day if they are single digits
-          const formattedMonth = month.padStart(2, '0');
-          const formattedDay = day.padStart(2, '0');
-      
-          // Create a new date string in the format "month-day-year"
-          const newDateString = `${month}-${day}-${year}`;
-      
-          // Create a new Date object from the new date string and get its timestamp
-          const datetime = new Date(newDateString).getTime();
-          const value = parseFloat(rate);
-      
-          if (isNaN(value)) {
-              throw new Error(`Invalid rate value: ${rate}`);
-          }
-      
-          return {
-              time: datetime,
-              value: value,
-          };
-      });    
-      return cdata;
-  } catch (error) {
-      console.error("Error fetching or transforming data:", error);
-      return []; // Return an empty array to avoid passing null data to the chart
-  }
-};
-
-const displayChart = async () => {
-  try {
-      const chartProperties = {
-        width: 1250,
-        height: 600,
-          timeScale: {
-              timeVisible: true,
-              secondsVisible: true,
-          },
-      };
-    
-      const domElement = document.getElementById("oilChart");
-      const chart = LightweightCharts.createChart(domElement, chartProperties);
-      const lineSeries = chart.addLineSeries();
-      const linedata = await getData();
-      console.log("linedata = ", linedata);
-      lineSeries.setData(linedata);
-  } catch (error) {
-      console.error("Error displaying chart:", error);
-  }
-};
-
-displayChart();
+    });
+  });

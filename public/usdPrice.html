@@ -35,7 +35,8 @@
                 </div>
             </div>
             <div class="graph-display">
-                <div class="oilChart" id="oilChart"></div>
+                <!-- <div class="oilChart" id="oilChart"></div> -->
+                <canvas id="myChart" width="800" height="400"></canvas>
                 <div class="exchange-container">
                     <!--  //////////////////////////////////////////////////////////////  -->
                     <div class="active exchange-tab" id="usd-to-baht">
@@ -79,6 +80,7 @@
         </div>
     </div>
 </body>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 <script src="scripts/usdPrice.js"></script>
 </html>
