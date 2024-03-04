@@ -6,8 +6,23 @@ fetch("http://localhost:3002/getSgdOilPrice")
       value: parseFloat(entry.oilsgd_value),
     }));
 
-    const times = oilPrices.map((price) => price.time);
+    const times = oilPrices.map((price) => {
+      // Parse the time string into hours, minutes, and seconds
+      const [hours, minutes, seconds] = price.time.split(":");
+      
+      // Create a new date object with the current date and extracted time
+      const utcTime = new Date();
+      utcTime.setUTCHours(hours, minutes, seconds);
+
+      // Convert the time to Thailand time
+      const thailandTime = new Date(utcTime.getTime() + (7 * 60 * 60 * 1000)); // Add 7 hours for Thailand time
+      return thailandTime.toISOString().slice(11, 19); // Extract only HH:mm:ss from ISO string
+    });
+
     const values = oilPrices.map((price) => price.value);
+
+    // Output extracted times to console
+    console.log("Extracted Times:", times);
 
     const ctx = document.getElementById("myChart").getContext("2d");
     const myChart = new Chart(ctx, {
@@ -43,8 +58,8 @@ const convertBtn = document.getElementById("convert-value");
 convertBtn.addEventListener("click", convertAndDisplayResult);
 
 function convertAndDisplayResult() {
-  const barrelInput = document.getElementById("barrel");
-  const barrelValue = barrelInput.value;
+  var barrelInput = document.getElementById("barrel");
+  var barrelValue = barrelInput.value;
 
   const apiUrl = `http://localhost:3002/getConvertBarreltoLiter?barrel=${barrelValue}`;
 
@@ -63,5 +78,3 @@ function convertAndDisplayResult() {
       console.error("Error:", error.message);
     });
 }
-
-displayChart();

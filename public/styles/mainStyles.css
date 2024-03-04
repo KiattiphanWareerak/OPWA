@@ -33,7 +33,7 @@ body {
     text-decoration: none;
     font-size: 17px;
     transition: all .3s ease-out;
-    
+    margin-right: 5px;
 }
 
 .head-menu a.active{
@@ -98,15 +98,19 @@ body {
     border: #000000 1px solid;
 }
 
-.oilChart{
+.graph-display #oilChart{
     width: 100%;
+}
+
+.oilChart{
+    width: 85%;
     border-right: #000000 1px solid;
 }
 
 .exchange-container{
     border-left: #000000 1px solid;
     display: block;
-    width: 30%;
+    width: 15%;
     text-align: center;
 }
 
