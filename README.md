@@ -1,7 +1,7 @@
 # OPWA
 - - - Oil Price Web Application - - -  Cloud Project
 
-> SERVICES
+# SERVICES
 In the same directory as services.js 
 run service command are:
 ```
