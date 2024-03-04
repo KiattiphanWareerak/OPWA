@@ -18,7 +18,7 @@ const getData = async () => {
 
 const displayChart = async () => {
     const chartProperties = {
-      width: 1400,
+      width: 1250,
       height: 600,
       timeScale: {
         timeVisible: true,

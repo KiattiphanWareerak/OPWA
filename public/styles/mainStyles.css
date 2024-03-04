@@ -90,23 +90,21 @@ body {
 }
 
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
-.graph-display{
+.graph-display {
     height: 630px;
-    min-width: none;
-    max-width: 100%;
+    width: 100%;
     display: flex;
     border: #000000 1px solid;
 }
 
-.oilChart{
-    width: 100%;
+.oilChart {
+    width: 90%; /* Occupy 70% of the width */
     border-right: #000000 1px solid;
 }
 
-.exchange-container{
+.exchange-container {
+    width: 20%; /* Occupy 30% of the width */
     border-left: #000000 1px solid;
-    display: block;
-    width: 30%;
     text-align: center;
 }
 

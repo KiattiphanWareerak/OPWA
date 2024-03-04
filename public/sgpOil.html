@@ -35,47 +35,50 @@
                 </div>
                 <div class="select-oil-container">
                     <select id="select-oil">
-                        <option value="Diesel">Diesel</option>
-                        <option value="Diesel B7">Diesel B7</option>
-                        <option value="Gasohol E85">Gasohol E85</option>
-                        <option value="Gasohol E20">Gasohol E20</option>
-                        <option value="Gasohol 91">Gasohol 91</option>
-                        <option value="Gasohol 95">Gasohol 95</option>
-                        <option value="Gasoline 95">Gasoline 95</option>
-                        <option value="Premium Diesel B7">Premium Diesel B7</option>
-                        <option value="Super Power GSH95">Super Power GSH95</option>
+                        <option value="Diesel">Singapore oil</option>
                       </select>
                 </div>
             </div>
             <div class="graph-display">
                 <div id="oilChart" class="oilChart"></div>
                 <div class="exchange-container">
+                    <!--  //////////////////////////////////////////////////////////////  -->
                     <div class="active exchange-tab" id="barrel-to-liter">
                         <div class="top">
                             <label for="barrel">barrel</label>
                             <input type="text" placeholder="barrel (oil)" id="barrel">
+                        </div>
+                        <div class="switch-btn">
+                            <button onclick="switchTopAndBottom('barrel-to-liter', 'liter-to-barrel')">
+                                <i class="fa-solid fa-right-left"></i>
+                            </button>
                         </div>
                         <div class="bottom">
                             <label for="liter">liter</label>
                             <input type="text" placeholder="liter(s)" id="liter" disabled>
                         </div>
                     </div>
-                    <div class="switch-btn">
-                        <button id="switch-topANDbottom"></button>
-                    </div>
+                    <!--  //////////////////////////////////////////////////////////////  -->
                     <div class="exchange-tab" id="liter-to-barrel">
                         <div class="top">
                             <label for="liter">liter</label>
                             <input type="text" placeholder="liter(s)" id="liter">
+                        </div>
+                        <div class="switch-btn">
+                            <button onclick="switchTopAndBottom('liter-to-barrel', 'barrel-to-liter')">
+                                <i class="fa-solid fa-right-left"></i>
+                            </button>
                         </div>
                         <div class="bottom">
                             <label for="barrel">barrel</label>
                             <input type="text" placeholder="barrel (oil)" id="barrel" disabled>
                         </div>
                     </div>
+                    <!--  //////////////////////////////////////////////////////////////  -->
                     <div class="convert-btn">
                         <button id="convert-value">Convert</button>
                     </div>
+                    <!--  //////////////////////////////////////////////////////////////  -->
                 </div>
             </div>
         </div>
