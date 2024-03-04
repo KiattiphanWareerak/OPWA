@@ -1006,7 +1006,7 @@ async function getHistoricalOilPricesProvincial(language, dd, mm, yyyy, provinci
   await insertPTTOilPrice();
 
   // every day to insert sgd, ptt
-  setInterval(insertSGDOilPrice, 24 * 60 * 60 * 1000); // 1 วันมี 24 ชั่วโมง 1 ชั่วโมงมี 60 นาที 1 นาทีมี 60 วินาที
+  setInterval(insertSGDOilPrice, 24 * 60 * 60 * 1000); 
   setInterval(insertPTTOilPrice, 24 * 60 * 60 * 1000);
 })();
 
