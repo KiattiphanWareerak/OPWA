@@ -1002,9 +1002,6 @@ async function getHistoricalOilPricesProvincial(language, dd, mm, yyyy, provinci
 
 // Starting if server running
 (async function () {
-  await insertSGDOilPrice();
-  await insertPTTOilPrice();
-
   // every day to insert sgd, ptt
   setInterval(insertSGDOilPrice, 60 * 60000); 
   setInterval(insertPTTOilPrice, 24 * 60 * 60 * 1000);
