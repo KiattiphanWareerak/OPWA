@@ -64,91 +64,91 @@ testGetApiService();
 // test api
 async function testGetApiService() {
     axios.get(`http://localhost:3002/getPttDiesel`)
-    .then(async (response) => {
-        console.log('Status:', response.status);
-        console.log('Data:', response.data);
+        .then(async (response) => {
+            console.log('Status:', response.status);
+            console.log('Data:', response.data);
 
-        // สร้างอ็อบเจ็กต์เพื่อเก็บข้อมูลราคาตามเดือน
-        let monthlyPrices = {};
+            // สร้างอ็อบเจ็กต์เพื่อเก็บข้อมูลราคาตามเดือน
+            let monthlyPrices = {};
 
-        // วนลูปผ่านข้อมูลราคาทุกรายการ
-        response.data.resultData.forEach(item => {
-            // แปลงวันที่ในรูปแบบ string เป็น Date object
-            let priceDate = new Date(item.price_date);
-            // ดึงเดือนและปีออกมา
-            let monthYear = priceDate.getMonth() + 1 + '/' + priceDate.getFullYear();
-            
-            // ถ้ายังไม่มีข้อมูลราคาสำหรับเดือนนี้ ให้สร้างอาเรย์ว่าง
-            if (!monthlyPrices[monthYear]) {
-                monthlyPrices[monthYear] = [];
+            // วนลูปผ่านข้อมูลราคาทุกรายการ
+            response.data.resultData.forEach(item => {
+                // แปลงวันที่ในรูปแบบ string เป็น Date object
+                let priceDate = new Date(item.price_date);
+                // ดึงเดือนและปีออกมา
+                let monthYear = priceDate.getMonth() + 1 + '/' + priceDate.getFullYear();
+
+                // ถ้ายังไม่มีข้อมูลราคาสำหรับเดือนนี้ ให้สร้างอาเรย์ว่าง
+                if (!monthlyPrices[monthYear]) {
+                    monthlyPrices[monthYear] = [];
+                }
+
+                // เก็บราคาลงในอาเรย์ของเดือนนี้
+                monthlyPrices[monthYear].push(parseFloat(item.price));
+            });
+
+            // สร้างอ็อบเจ็กต์เพื่อเก็บค่าเฉลี่ยของราคาทุกเดือน
+            let averagePrices = {};
+
+            // วนลูปผ่านข้อมูลราคาทุกเดือน
+            for (let monthYear in monthlyPrices) {
+                // คำนวณค่าเฉลี่ยของราคาสำหรับเดือนนี้
+                let total = monthlyPrices[monthYear].reduce((acc, curr) => acc + curr, 0);
+                let average = total / monthlyPrices[monthYear].length;
+
+                // เก็บค่าเฉลี่ยไว้ในอ็อบเจ็กต์ averagePrices
+                averagePrices[monthYear] = average.toFixed(3); // ปัดเลขทศนิยมเป็น 3 ตำแหน่ง
             }
-            
-            // เก็บราคาลงในอาเรย์ของเดือนนี้
-            monthlyPrices[monthYear].push(parseFloat(item.price));
+
+            // แสดงผลลัพธ์
+            console.log(averagePrices);
+
+        })
+        .catch((error) => {
+            console.error('Error:', error.message);
         });
-
-        // สร้างอ็อบเจ็กต์เพื่อเก็บค่าเฉลี่ยของราคาทุกเดือน
-        let averagePrices = {};
-
-        // วนลูปผ่านข้อมูลราคาทุกเดือน
-        for (let monthYear in monthlyPrices) {
-            // คำนวณค่าเฉลี่ยของราคาสำหรับเดือนนี้
-            let total = monthlyPrices[monthYear].reduce((acc, curr) => acc + curr, 0);
-            let average = total / monthlyPrices[monthYear].length;
-            
-            // เก็บค่าเฉลี่ยไว้ในอ็อบเจ็กต์ averagePrices
-            averagePrices[monthYear] = average.toFixed(3); // ปัดเลขทศนิยมเป็น 3 ตำแหน่ง
-        }
-
-        // แสดงผลลัพธ์
-        console.log(averagePrices);
-
-    })
-    .catch((error) => {
-        console.error('Error:', error.message);
-    });
 }
 
 // insert data
 async function insertRateUsdThb() {
     axios.get(url7)
-    .then(async (response) => {
-        console.log('Status:', response.status);
-        console.log('Data:', response.data);
+        .then(async (response) => {
+            console.log('Status:', response.status);
+            console.log('Data:', response.data);
 
-        let dataUsdThb = response.data.result.data.data_detail;
+            let dataUsdThb = response.data.result.data.data_detail;
 
-        console.log(dataUsdThb);
+            console.log(dataUsdThb);
 
-        const client = new Client({
-            user: 'ford_ser',
-            host: '10.161.112.160',
-            database: 'oil_price_cloud',
-            password: '1q2w3e4r',
-            port: 5432,
-        });
-  
-        (async () => {
-            try {
-                await client.connect();
-        
-                for (const item of dataUsdThb) {
-                    const query = 'INSERT INTO rate_usd_thb (period, rate) VALUES ($1, $2) ON CONFLICT (period, rate) DO NOTHING';
-                    const values = [item.period, item.rate];
-                    await client.query(query, values);
+            const client = new Client({
+                user: 'ford_ser',
+                host: '10.161.112.160',
+                database: 'oil_price_cloud',
+                password: '1q2w3e4r',
+                port: 5432,
+            });
+
+            (async () => {
+                try {
+                    await client.connect();
+
+                    for (const item of dataUsdThb) {
+                        const query = 'INSERT INTO rate_usd_thb (period, rate) VALUES ($1, $2) ON CONFLICT (period, rate) DO NOTHING';
+                        const values = [item.period, item.rate];
+                        await client.query(query, values);
+                    }
+
+                    console.log('Data inserted successfully');
+                } catch (error) {
+                    console.error('Error inserting data:', error);
+                } finally {
+                    await client.end();
                 }
-        
-                console.log('Data inserted successfully');
-            } catch (error) {
-                console.error('Error inserting data:', error);
-            } finally {
-                await client.end();
-            }
-        })();
-    })
-    .catch((error) => {
-        console.error('Error:', error.message);
-    });
+            })();
+        })
+        .catch((error) => {
+            console.error('Error:', error.message);
+        });
 }
 async function insertPtt() {
     try {
@@ -177,7 +177,7 @@ async function insertPtt() {
             const xmlString = entry.GetOilPriceResult;
             const parsedData = await parseXML(xmlString);
             console.log(parsedData);
-            
+
             try {
                 const client = await pool.connect();
 
