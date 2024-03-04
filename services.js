@@ -133,6 +133,7 @@ app.get('/getOilPriceProvincialList', async (req, res) => {
 });
 app.get('/getRateUSDtoTHB', async (req, res) => {
   try {
+    // ย้อนหลังข้อมูล 1 เดือน จากวันที่กำหนด dd/mm/yyyy
     const currentDate = new Date();
 
     const data = await getRateUSDtoTHB(req.query.dd || currentDate.getDate(),
@@ -155,6 +156,7 @@ app.get('/getSingaporeOil', async (req, res) => {
     res.status(500).send('Error fetching SingaporeOil');
   }
 });
+// Calculate routing
 app.get('/getConvertUSDtoTHB', async (req, res) => {
   try {
     const currentDate = new Date();
@@ -221,7 +223,7 @@ app.get('/getPttOilPrice', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price
+        SELECT * FROM ptt_oil_price ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM');
     `;
         
     const result = await client.query(query);
@@ -252,7 +254,7 @@ app.get('/getSgdOilPrice', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM sgp_oil_price
+        SELECT * FROM sgd_oil_price
     `;
         
     const result = await client.query(query);
@@ -314,7 +316,10 @@ app.get('/getPttDiesel', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Diesel'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Diesel' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -345,7 +350,10 @@ app.get('/getPttDieselB7', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Diesel B7'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Diesel B7' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -376,7 +384,10 @@ app.get('/getPttGasoholE85', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol E85'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Gasohol E85' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -407,7 +418,10 @@ app.get('/getPttGasoholE20', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol E20'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Gasohol E20' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -438,7 +452,10 @@ app.get('/getPttGasohol91', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol 91'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Gasohol 91' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -469,7 +486,10 @@ app.get('/getPttGasohol95', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Gasohol 95'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Gasohol 95' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -500,7 +520,10 @@ app.get('/getPttGasoline95', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Gasoline 95'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Gasoline 95' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -531,7 +554,10 @@ app.get('/getPttPremiumDieselB7', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Premium Diesel B7'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Premium Diesel B7' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -562,7 +588,10 @@ app.get('/getPttSuperPowerGSH95', async (req, res) => {
     await client.connect();
 
     const query = `
-        SELECT * FROM ptt_oil_price WHERE product = 'Super Power GSH95'
+        SELECT * 
+        FROM ptt_oil_price 
+        WHERE product = 'Super Power GSH95' 
+        ORDER BY TO_TIMESTAMP(price_date, 'MM/DD/YYYY HH:MI:SS AM')
     `;
         
     const result = await client.query(query);
@@ -959,11 +988,60 @@ async function getHistoricalOilPricesProvincial(language, dd, mm, yyyy, provinci
   }
 }
 
-// Recursive api to insert to my db
-// ppt oil
-setInterval(async () => {
+// Starting if server running
+(async function () {
+  await insertSGDOilPrice();
+  await insertPTTOilPrice();
+
+  // every day to insert sgd, ptt
+  setInterval(insertSGDOilPrice, 24 * 60 * 60 * 1000); // 1 วันมี 24 ชั่วโมง 1 ชั่วโมงมี 60 นาที 1 นาทีมี 60 วินาที
+  setInterval(insertPTTOilPrice, 24 * 60 * 60 * 1000);
+})();
+
+async function insertSGDOilPrice() {
   try {
-      const data = await getCurrentOilPrice('en'); // สำหรับภาษาอังกฤษ
+      const data = await getSingaporeOil();
+      const oilSgdData = data['OILSGD'];
+      console.log(oilSgdData);
+
+      const client = new Client({
+          user: 'ford_ser',
+          host: '10.161.112.160',
+          database: 'oil_price_cloud',
+          password: '1q2w3e4r',
+          port: 5432,
+      });
+
+      await client.connect();
+
+      const query = `
+          INSERT INTO sgd_oil_price (oilsgd_value, oilsgd_change, oilsgd_change1, oilsgd_change2, oilsgd_lastdaily, oilsgd_hi, oilsgd_lo, oilsgd_time, oilsgd_chart)
+          VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+      `;
+
+      const values = [
+          oilSgdData.value,
+          oilSgdData.change,
+          oilSgdData.change1,
+          oilSgdData.change2,
+          oilSgdData.lastdaily,
+          oilSgdData.hi,
+          oilSgdData.lo,
+          oilSgdData.time,
+          oilSgdData.chart
+      ];
+
+      await client.query(query, values);
+      await client.end();
+      
+      console.log("Data inserted sdg successfully");
+  } catch (error) {
+      console.error('Error fetching and processing data:', error);
+  }
+}
+async function insertPTTOilPrice() {
+  try {
+      const data = await getCurrentOilPrice('en');
       const parsed = parser.parse(data);
       console.log(parsed);
 
@@ -978,16 +1056,16 @@ setInterval(async () => {
           const priceDate = fuelElement.querySelector('PRICE_DATE').textContent;
           const product = fuelElement.querySelector('PRODUCT').textContent;
           const price = fuelElement.querySelector('PRICE').textContent;
-        
+
           const fuelInfo = {
-            "PRICE_DATE": priceDate,
-            "PRODUCT": product,
-            "PRICE": price
+              "PRICE_DATE": priceDate,
+              "PRODUCT": product,
+              "PRICE": price
           };
-        
+
           fuelArray.push(fuelInfo);
       }
-        
+
       console.log(fuelArray);
 
       const client = new Client({
@@ -1006,62 +1084,19 @@ setInterval(async () => {
               INSERT INTO ptt_oil_price (price_date, product, price)
               VALUES ($1, $2, $3)
           `;
-              
+
           const values = [PRICE_DATE, PRODUCT, PRICE];
-              
+
           return client.query(query, values);
       });
 
       await Promise.all(queries);
 
       await client.end();
-      
+
       console.log("Data inserted ptt successfully");
   } catch (error) {
       console.error('Error fetching and processing data:', error);
   }
-}, 360000); // 1 hour
-// sgd oil
-setInterval(async () => {
-  try {
-      const data = await getSingaporeOil();
+}
 
-      const oilSgdData = data['OILSGD'];
-      console.log(oilSgdData);
-
-      const client = new Client({
-          user: 'ford_ser',
-          host: '10.161.112.160',
-          database: 'oil_price_cloud',
-          password: '1q2w3e4r',
-          port: 5432,
-      });
-
-      await client.connect();
-
-      const query = `
-        INSERT INTO sgp_oil_price (value, change, change1, change2, lastdaily, hi, lo, time, chart)
-        VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
-      `;
-
-      const values = [
-        oilSgdData.value,
-        oilSgdData.change,
-        oilSgdData.change1,
-        oilSgdData.change2,
-        oilSgdData.lastdaily,
-        oilSgdData.hi,
-        oilSgdData.lo,
-        oilSgdData.time,
-        oilSgdData.chart
-      ];
-
-      await client.query(query, values);
-      await client.end();
-      
-      console.log("Data inserted sdg successfully");
-  } catch (error) {
-      console.error('Error fetching and processing data:', error);
-  }
-}, 300000);
-// dollar usd/thb
