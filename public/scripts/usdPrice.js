@@ -19,8 +19,8 @@ fetch("http://localhost:3002/getRateUSDtoTHBforDb")
           {
             label: "Exchange Rate (USD to THB)",
             data: rates,
-            backgroundColor: 'rgba(33, 150, 243, 0.2)', // สีฟ้าอ่อนโปร่งใส
-            borderColor: 'rgba(33, 150, 243, 1)', // สีฟ้าอ่อนทึบ
+            backgroundColor: "rgba(33, 150, 243, 0.2)", // สีฟ้าอ่อนโปร่งใส
+            borderColor: "rgba(33, 150, 243, 1)", // สีฟ้าอ่อนทึบ
             borderWidth: 1,
           },
         ],
@@ -39,3 +39,46 @@ fetch("http://localhost:3002/getRateUSDtoTHBforDb")
       },
     });
   });
+
+const convertBtn = document.getElementById("convert-value-usd");
+convertBtn.addEventListener("click", convertAndDisplayResult);
+
+function convertAndDisplayResult() {
+  const usInput = document.getElementById("usd");
+  const usValue = usInput.value;
+  const bahtInput = document.getElementById("bahtTest");
+  const bahtValue = bahtInput.value;
+
+  const apiUrl = `http://localhost:3002/getConvertUSDtoTHB?usd=${usValue}`;
+  const bahtUrl = `http://localhost:3002/getConvertTHBtoUSD?thb=${bahtValue}`;
+
+    fetch(apiUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const bahtInput = document.getElementById("baht");
+        bahtInput.value = data;
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+
+    fetch(bahtUrl)
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error("Network response was not ok");
+        }
+        return response.json();
+      })
+      .then((data) => {
+        const usInput = document.getElementById("usdTest");
+        usInput.value = data;
+      })
+      .catch((error) => {
+        console.error("Error:", error.message);
+      });
+}

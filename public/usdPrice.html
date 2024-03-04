@@ -34,16 +34,22 @@
                     <div>|</div>
                 </div>
                 <div class="select-oil-container">
-                    <select id="select-currency">
-                        <option value="USD">US Dollar</option>
-                        
+                    <select id="select-oil">
+                        <option value="Diesel">Diesel</option>
+                        <option value="Diesel B7">Diesel B7</option>
+                        <option value="Gasohol E85">Gasohol E85</option>
+                        <option value="Gasohol E20">Gasohol E20</option>
+                        <option value="Gasohol 91">Gasohol 91</option>
+                        <option value="Gasohol 95">Gasohol 95</option>
+                        <option value="Gasoline 95">Gasoline 95</option>
+                        <option value="Premium Diesel B7">Premium Diesel B7</option>
+                        <option value="Super Power GSH95">Super Power GSH95</option>
                       </select>
                 </div>
             </div>
             <div class="graph-display">
-                <div class="oilChart">
-                    <canvas id="myChart"></canvas>
-                </div>
+                <!-- <div class="oilChart" id="oilChart"></div> -->
+                <canvas id="myChart"></canvas>
                 <div class="exchange-container">
                     <!--  //////////////////////////////////////////////////////////////  -->
                     <div class="active exchange-tab" id="usd-to-baht">
@@ -65,7 +71,7 @@
                     <div class="exchange-tab" id="baht-to-usd">
                         <div class="top">
                             <label for="baht">baht</label>
-                            <input type="text" placeholder="baht" id="baht">
+                            <input type="text" placeholder="baht" id="bahtTest">
                         </div>
                         <div class="switch-btn">
                             <button onclick="switchTopAndBottom('baht-to-usd', 'usd-to-baht')">
@@ -74,12 +80,12 @@
                         </div>
                         <div class="bottom">
                             <label for="usd">USD</label>
-                            <input type="text" placeholder="dollar" id="usd" disabled>
+                            <input type="text" placeholder="dollar" id="usdTest" disabled>
                         </div>
                     </div>
                     <!--  //////////////////////////////////////////////////////////////  -->
                     <div class="convert-btn">
-                        <button id="convert-value">Convert</button>
+                        <button id="convert-value-usd">Convert</button>
                     </div>
                     <!--  //////////////////////////////////////////////////////////////  -->
                 </div> 

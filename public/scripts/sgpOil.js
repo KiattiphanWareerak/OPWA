@@ -61,7 +61,11 @@ function convertAndDisplayResult() {
   var barrelInput = document.getElementById("barrel");
   var barrelValue = barrelInput.value;
 
+  var litInput = document.getElementById("literTest");
+  var litValue = litInput.value;
+
   const apiUrl = `http://localhost:3002/getConvertBarreltoLiter?barrel=${barrelValue}`;
+  const litUrl = `http://localhost:3002/getConvertLitertoBarrel?litter=${litValue}`;
 
   fetch(apiUrl)
     .then((response) => {
@@ -72,6 +76,21 @@ function convertAndDisplayResult() {
     })
     .then((data) => {
       const literInput = document.getElementById("liter");
+      literInput.value = data;
+    })
+    .catch((error) => {
+      console.error("Error:", error.message);
+    });
+
+    fetch(litUrl)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const literInput = document.getElementById("barrelTest");
       literInput.value = data;
     })
     .catch((error) => {
