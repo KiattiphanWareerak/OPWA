@@ -12,7 +12,7 @@ const serviceURL = 'https://orapiweb.pttor.com/oilservice/OilPrice.asmx';
 // Set up the server
 const app = express();
 const port = 3002;
-const host = 'localhost';
+const host = '0.0.0.0';
 app.use(cors());
 
 // For parse data

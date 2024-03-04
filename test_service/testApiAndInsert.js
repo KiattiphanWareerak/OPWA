@@ -64,7 +64,7 @@ testGetApiService();
 
 // test api
 async function testGetApiService() {
-    axios.get(`http://localhost:3002/getPttDiesel`)
+    axios.get(`http://localhost:3002/getRateUSDtoTHBforDb`)
     .then(async (response) => {
         console.log('Status:', response.status);
         console.log('Data:', response.data);
