@@ -40,6 +40,11 @@ body {
     background-color: #9e4b4b;
     border-radius: 5px;
 }
+
+.head-menu a:hover {
+    background-color: #9e4b4b;
+    border-radius: 5px;
+}
 /* * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
 
 /* * * * * * * * * Select Data Part * * * * * * * * * * * */

@@ -205,6 +205,18 @@ app.get('/getConvertBarreltoLiter', async (req, res) => {
 
     res.json(result);
   } catch (error) {
+    console.error('Error fetching getConvertBarreltoLiter:', error);
+    res.status(500).send('Error fetching getConvertBarreltoLiter');
+  }
+});
+app.get('/getConvertLitertoBarrel', async (req, res) => {
+  try {
+    let result = parseFloat(req.query.litter) / 158.987;
+    result = result.toFixed(3);
+    console.log(req.query.barrel + " / 158.987 = " + result);
+
+    res.json(result);
+  } catch (error) {
     console.error('Error fetching getConvertTHBtoUSD:', error);
     res.status(500).send('Error fetching getConvertTHBtoUSD');
   }

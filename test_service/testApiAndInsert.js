@@ -40,9 +40,8 @@ const url6 = `http://localhost:3002/getOilPriceProvincialList?${params6.toString
 // url6 จะมีรูปแบบ http://localhost:3002/getOilPriceProvincialList?language=en&dd=2&mm=2&yyyy=2024&provincial=Bangkok
 const params7 = new URLSearchParams({
     dd: 4,
-    mm: 3,
-
-    yyyy: 2023,
+    mm: 6,
+    yyyy: 204,
 });
 const url7 = `http://localhost:3002/getRateUSDtoTHB?${params7.toString()}`;
 // url7 จะมีรูปแบบ http://localhost:3002/getRateUSDtoTHB?dd=15&mm=2&yyyy=2024
@@ -56,8 +55,8 @@ const url14 = `http://localhost:3002/getRateUSDtoTHBforDb`;
 
 // main //
 
-testGetApiService();
-// insertRateUsdThb(); // ย้อนหลัง 1 เดือน จากวันที่กำหนด dd/mm/yyyy
+// testGetApiService();
+insertRateUsdThb(); // ย้อนหลัง 1 เดือน จากวันที่กำหนด dd/mm/yyyy
 // insertPtt(); // ย้อนหลังจากวันที่กำหนด dd/mm/yyyy เลย (Error insert บ่อย)
 
 // ---- //
