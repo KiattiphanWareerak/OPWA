@@ -1,12 +1,15 @@
 # OPWA
-- - - Oil Price Web Application - - -  Cloud Project
+- - - Oil Price Web Application - - -
+- - - EN814170  Cloud Application and Networking Project - - -
 
-# SERVICES
-run service command are:
+# GETTING STARTED
+1) Install docker and docker-compose on your computer:
+2) Clone this reposity:
 ```
-npm run start
+git clone https://github.com/KiattiphanWareerak/OPWA.git
 ```
-output:
+3) Open the terminal in OPWA directory:
+4) Deploy the services:
 ```
-Server listening on port 0.0.0.0:3002
+sudo docker-compose up -d
 ```
