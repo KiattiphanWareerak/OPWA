@@ -164,7 +164,7 @@ app.get('/getConvertUSDtoTHB', async (req, res) => {
     yesterday.setDate(currentDate.getDate() - 1);
 
     const data = await getConvertUSDtoTHB(String(yesterday.getDate()).padStart(2, "0"),
-    String(yesterday.getMonth()).padStart(2, "0"), 
+    String(yesterday.getMonth() + 1).padStart(2, "0"), 
     yesterday.getFullYear());
 
     let result = parseFloat(data.result.data.data_detail[0].rate) * parseFloat(req.query.usd);
@@ -855,7 +855,7 @@ async function getConvertUSDtoTHB(dd, mm, yyyy) {
   yago = yyyy;
 
   pdd = String(currentDate.getDate()).padStart(2, "0");
-  pmm = String(currentDate.getMonth()).padStart(2, "0");
+  pmm = String(currentDate.getMonth() + 1).padStart(2, "0");
   pyyyy = currentDate.getFullYear();
 
   const options = {
