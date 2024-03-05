@@ -8,7 +8,7 @@ const params = new URLSearchParams({
     mm: 3,
     yyyy: 2022,
 });
-const url = `http://localhost:3002/getOilPriceList?${params.toString()}`;
+const url = `http://10.161.112.160:3002/getOilPriceList?${params.toString()}`;
 
 async function insertPtt() {
     try {
@@ -28,7 +28,7 @@ async function insertPtt() {
         const pool = new Pool({
             user: 'ford_ser',
             host: '10.161.112.160',
-            database: 'oil_price_cloud',
+            database: 'postgres',
             password: '1q2w3e4r',
             port: 5432,
         });

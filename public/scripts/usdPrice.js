@@ -1,5 +1,5 @@
 // Fetch data from the API
-fetch("http://localhost:3002/getRateUSDtoTHBforDb")
+fetch("http://10.161.112.160:3002/getRateUSDtoTHBforDb")
   .then((response) => response.json())
   .then((data) => {
     const sortedData = data.resultData.sort((a, b) => {
@@ -49,8 +49,8 @@ function convertAndDisplayResult() {
   const bahtInput = document.getElementById("bahtTest");
   const bahtValue = bahtInput.value;
 
-  const apiUrl = `http://localhost:3002/getConvertUSDtoTHB?usd=${usValue}`;
-  const bahtUrl = `http://localhost:3002/getConvertTHBtoUSD?thb=${bahtValue}`;
+  const apiUrl = `http://10.161.112.160:3002/getConvertUSDtoTHB?usd=${usValue}`;
+  const bahtUrl = `http://10.161.112.160:3002/getConvertTHBtoUSD?thb=${bahtValue}`;
 
     fetch(apiUrl)
       .then((response) => {

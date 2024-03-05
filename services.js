@@ -227,7 +227,7 @@ app.get('/getPttOilPrice', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -258,7 +258,7 @@ app.get('/getSgdOilPrice', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -289,7 +289,7 @@ app.get('/getRateUSDtoTHBforDb', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -320,7 +320,7 @@ app.get('/getPttDiesel', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -354,7 +354,7 @@ app.get('/getPttDieselB7', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -388,7 +388,7 @@ app.get('/getPttGasoholE85', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -422,7 +422,7 @@ app.get('/getPttGasoholE20', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -456,7 +456,7 @@ app.get('/getPttGasohol91', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -490,7 +490,7 @@ app.get('/getPttGasohol95', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -524,7 +524,7 @@ app.get('/getPttGasoline95', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -558,7 +558,7 @@ app.get('/getPttPremiumDieselB7', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -592,7 +592,7 @@ app.get('/getPttSuperPowerGSH95', async (req, res) => {
     const client = new Client({
         user: 'ford_ser',
         host: '10.161.112.160',
-        database: 'oil_price_cloud',
+        database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
     });
@@ -1002,9 +1002,10 @@ async function getHistoricalOilPricesProvincial(language, dd, mm, yyyy, provinci
 
 // Starting if server running
 (async function () {
-  // every day to insert sgd, ptt
-  setInterval(insertSGDOilPrice, 60 * 60000); 
-  setInterval(insertPTTOilPrice, 24 * 60 * 60 * 1000);
+  setInterval(insertSGDOilPrice, 1 * 60 * 1000);
+  setInterval(insertRateUsdThb, 24 * 60 * 60 * 1000); 
+  setInterval(insertPTTOilPrice, 3 * 24 * 60 * 60 * 1000);
+
 })();
 
 async function insertSGDOilPrice() {
@@ -1016,7 +1017,7 @@ async function insertSGDOilPrice() {
       const client = new Client({
           user: 'ford_ser',
           host: '10.161.112.160',
-          database: 'oil_price_cloud',
+          database: 'postgres',
           password: '1q2w3e4r',
           port: 5432,
       });
@@ -1080,7 +1081,7 @@ async function insertPTTOilPrice() {
       const client = new Client({
           user: 'ford_ser',
           host: '10.161.112.160',
-          database: 'oil_price_cloud',
+          database: 'postgres',
           password: '1q2w3e4r',
           port: 5432,
       });
@@ -1108,4 +1109,38 @@ async function insertPTTOilPrice() {
       console.error('Error fetching and processing data:', error);
   }
 }
-
+async function insertRateUsdThb() {
+  try {
+    const currentDate = new Date();
+    const yesterday = new Date();
+    yesterday.setDate(currentDate.getDate() - 1);
+  
+    const data = await getConvertUSDtoTHB(String(yesterday.getDate()).padStart(2, "0"),
+    String(yesterday.getMonth() + 1).padStart(2, "0"), 
+    yesterday.getFullYear());
+  
+    let dataUsdThb = data.result.data.data_detail;
+    console.log(dataUsdThb);
+  
+    const client = new Client({
+      user: 'ford_ser',
+      host: '10.161.112.160',
+      database: 'postgres',
+      password: '1q2w3e4r',
+      port: 5432,
+    });
+  
+    await client.connect();
+    
+    for (const item of dataUsdThb) {
+      const query = 'INSERT INTO rate_usd_thb (period, rate) VALUES ($1, $2) ON CONFLICT (period, rate) DO NOTHING';
+      const values = [item.period, item.rate];
+      await client.query(query, values);
+    }
+  
+    console.log('Data inserted rate usd/thb successfully');
+    await client.end();
+  } catch (error) {
+    console.error('Error fetching and processing data:', error);
+  }
+}

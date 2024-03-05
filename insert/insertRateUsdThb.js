@@ -10,7 +10,7 @@ async function insertRateUsdThb(day, month, year) {
         yyyy: year,
     });
 
-    const url = `http://localhost:3002/getRateUSDtoTHB?${params.toString()}`;
+    const url = `http://10.161.112.160:3002/getRateUSDtoTHB?${params.toString()}`;
 
     try {
         const response = await axios.get(url);
@@ -23,7 +23,7 @@ async function insertRateUsdThb(day, month, year) {
         const client = new Client({
             user: 'ford_ser',
             host: '10.161.112.160',
-            database: 'oil_price_cloud',
+            database: 'postgres',
             password: '1q2w3e4r',
             port: 5432,
         });
