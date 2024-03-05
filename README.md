@@ -11,7 +11,7 @@
 
 # GETTING STARTED
 1) Install docker and docker-compose on your computer<br>
-2) Clone this reposity:
+2) Clone this repository:
 ```
 git clone https://github.com/KiattiphanWareerak/OPWA.git
 ```
