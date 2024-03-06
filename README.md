@@ -18,5 +18,5 @@ git clone https://github.com/KiattiphanWareerak/OPWA.git
 3) Open the terminal in OPWA directory<br>
 4) Deploy the services:
 ```
-sudo docker-compose up -d
+sudo docker compose up -d
 ```
