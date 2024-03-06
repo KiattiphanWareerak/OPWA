@@ -226,7 +226,7 @@ app.get('/getPttOilPrice', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -257,7 +257,7 @@ app.get('/getSgdOilPrice', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -288,7 +288,7 @@ app.get('/getRateUSDtoTHBforDb', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -319,7 +319,7 @@ app.get('/getPttDiesel', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -353,7 +353,7 @@ app.get('/getPttDieselB7', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -387,7 +387,7 @@ app.get('/getPttGasoholE85', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -421,7 +421,7 @@ app.get('/getPttGasoholE20', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -455,7 +455,7 @@ app.get('/getPttGasohol91', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -489,7 +489,7 @@ app.get('/getPttGasohol95', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -523,7 +523,7 @@ app.get('/getPttGasoline95', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -557,7 +557,7 @@ app.get('/getPttPremiumDieselB7', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -591,7 +591,7 @@ app.get('/getPttSuperPowerGSH95', async (req, res) => {
   try {
     const client = new Client({
         user: 'ford_ser',
-        host: '10.161.112.160',
+        host: '127.0.0.1',
         database: 'postgres',
         password: '1q2w3e4r',
         port: 5432,
@@ -1016,7 +1016,7 @@ async function insertSGDOilPrice() {
 
       const client = new Client({
           user: 'ford_ser',
-          host: '10.161.112.160',
+          host: '127.0.0.1',
           database: 'postgres',
           password: '1q2w3e4r',
           port: 5432,
@@ -1080,7 +1080,7 @@ async function insertPTTOilPrice() {
 
       const client = new Client({
           user: 'ford_ser',
-          host: '10.161.112.160',
+          host: '127.0.0.1',
           database: 'postgres',
           password: '1q2w3e4r',
           port: 5432,
@@ -1124,7 +1124,7 @@ async function insertRateUsdThb() {
   
     const client = new Client({
       user: 'ford_ser',
-      host: '10.161.112.160',
+      host: '127.0.0.1',
       database: 'postgres',
       password: '1q2w3e4r',
       port: 5432,
