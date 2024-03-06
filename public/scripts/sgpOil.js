@@ -1,4 +1,4 @@
-fetch("http://localhost:3002/getSgdOilPrice")
+fetch("http://127.0.0.1:3002/getSgdOilPrice")
   .then((response) => response.json())
   .then((data) => {
     const oilPrices = data.resultData.map((entry) => ({
@@ -64,8 +64,8 @@ function convertAndDisplayResult() {
   var litInput = document.getElementById("literTest");
   var litValue = litInput.value;
 
-  const apiUrl = `http://localhost:3002/getConvertBarreltoLiter?barrel=${barrelValue}`;
-  const litUrl = `http://localhost:3002/getConvertLitertoBarrel?litter=${litValue}`;
+  const apiUrl = `http://127.0.0.1:3002/getConvertBarreltoLiter?barrel=${barrelValue}`;
+  const litUrl = `http://127.0.0.1:3002/getConvertLitertoBarrel?litter=${litValue}`;
 
   fetch(apiUrl)
     .then((response) => {

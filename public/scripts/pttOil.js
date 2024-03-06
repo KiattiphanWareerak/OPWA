@@ -46,40 +46,40 @@ const displayChart = async (url) => {
 };
 
 // Call displayChart with the default URL
-displayChart("http://localhost:3002/getPttDiesel");
+displayChart("http://127.0.0.1:3002/getPttDiesel");
 
 const selectOil = document.getElementById("select-oil");
 selectOil.addEventListener("change", function (event) {
   const selectedValue = event.target.value;
-  let url = "http://localhost:3002/getPttDiesel";
+  let url = "http://127.0.0.1:3002/getPttDiesel";
 
   switch (selectedValue) {
     case "Diesel":
-      url = "http://localhost:3002/getPttDiesel";
+      url = "http://127.0.0.1:3002/getPttDiesel";
       break;
     case "Diesel B7":
-      url = "http://localhost:3002/getPttDieselB7";
+      url = "http://127.0.0.1:3002/getPttDieselB7";
       break;
     case "Gasohol E85":
-      url = "http://localhost:3002/getPttGasoholE85";
+      url = "http://127.0.0.1:3002/getPttGasoholE85";
       break;
     case "Gasohol E20":
-      url = "http://localhost:3002/getPttGasoholE20";
+      url = "http://127.0.0.1:3002/getPttGasoholE20";
       break;
     case "Gasohol 91":
-      url = "http://localhost:3002/getPttGasohol91";
+      url = "http://127.0.0.1:3002/getPttGasohol91";
       break;
     case "Gasohol 95":
-      url = "http://localhost:3002/getPttGasohol95";
+      url = "http://127.0.0.1:3002/getPttGasohol95";
       break;
     case "Gasoline 95":
-      url = "http://localhost:3002/getPttGasoline95";
+      url = "http://127.0.0.1:3002/getPttGasoline95";
       break;
     case "Premium Diesel B7":
-      url = "http://localhost:3002/getPttPremiumDieselB7";
+      url = "http://127.0.0.1:3002/getPttPremiumDieselB7";
       break;
     case "Super Power GSH95":
-      url = "http://localhost:3002/getPttSuperPowerGSH95";
+      url = "http://127.0.0.1:3002/getPttSuperPowerGSH95";
       break;
     default:
       break;
